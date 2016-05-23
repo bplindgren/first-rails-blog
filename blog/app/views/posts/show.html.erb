@@ -1,0 +1,27 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.body %></p>
+
+<button><%= link_to 'Edit', edit_post_path(@post) %></button>
+<button><%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?'} %></button>
+
+<button><%= link_to 'Homepage', posts_path %></button>
+
+<% if @post_comments.length == 0 %>
+  <p>Be the first to leave a comment on this post!</p>
+<% else %>
+  <h3>Comments:</h3>
+  <% @post_comments.each do |comment| %>
+  <ul>
+    <li><%= comment.body %></li>
+  </ul>
+  <% end %>
+<% end %>
+
+<h4>Create Comment</h4>
+<%= form_for :comment, url: comments_path do |f| %>
+  <%= f.hidden_field :post_id, :value => @post.id %>
+  <%= f.text_area :body %>
+  <p>
+    <%= f.submit "Create Comment" %>
+  </p>
+<% end %>
